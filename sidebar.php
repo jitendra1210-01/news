@@ -21,7 +21,7 @@
              FROM post p 
              LEFT JOIN category c ON p.category = c.category_id 
              ORDER BY p.post_id DESC 
-             LIMIT 3";
+             LIMIT 5";
             $select_result = mysqli_query($connection, $select_query);
 
         if (mysqli_num_rows($select_result) > 0) {

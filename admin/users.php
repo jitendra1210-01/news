@@ -39,6 +39,12 @@ $select_result = mysqli_query($connection, $select_query);
                 <a class="add-new" href="add-user.php">add user</a>
             </div>
             <div class="col-md-12">
+
+                <?php  
+                if(isset($_SESSION['error'])){
+                       echo  '<div style="color: red; margin: 10px 0px; text-align:center">'.$_SESSION['error'].'</div>';
+                       unset($_SESSION["error"]);
+                }?>
                 <table class="content-table">
                     <thead>
                         <th>S.No.</th>
@@ -78,7 +84,11 @@ $select_result = mysqli_query($connection, $select_query);
                         <?php
                                 $i++;
                             }
-                        } ?>
+                        }else {
+                            echo "<tr><td colspan='5' style='text-align:center;'>No Data Found</td></tr>";
+                        }
+                        
+                        ?>
                     </tbody>
                 </table>
                 <?php
@@ -90,7 +100,7 @@ $select_result = mysqli_query($connection, $select_query);
                 if($total_page >1){
                 echo "<ul class='pagination admin-pagination'>";
                 if($page > 1){
-                echo "<li><a href='users.php?page=".($page - 1)."'>Prev</a></li>";
+                    echo "<li><a href='users.php?page=".($page - 1)."'>Prev</a></li>";
                 }
                 
                 for ($i = 1; $i <= $page; $i++) {
@@ -103,11 +113,11 @@ $select_result = mysqli_query($connection, $select_query);
                     echo "<li class='".$active."'><a href='users.php?page={$i}'>" . $i . "</a></li>";
                 }
                 if($total_page > $page){
-                echo "<li><a href='users.php?page=".($page + 1)."'>Next</a></li>";
+                    echo "<li><a href='users.php?page=".($page + 1)."'>Next</a></li>";
                 }
                 echo "</ul>";
             }
-                ?>
+            ?>
                 <!-- <li class="active"><a>1</a></li>
                     <li><a>3</a></li> -->
                 </ul>

@@ -1,12 +1,18 @@
 <?php include "header.php";
 include "config.php";
+
 if (isset($_GET['user_id'])) {
     $id = $_GET['user_id'];
+    if($_SESSION['user_id'] == $id){
+        $_SESSION['error'] = "You Can't Delete Your Self.";
+        header("location:users.php");
+    }else{
     $delete_query = "DELETE FROM user where user_id = $id";
     $delete_result = mysqli_query($connection,$delete_query);
     if($delete_result){
         header("location:users.php");
     }
+}
 }
 
 if (isset($_GET['category_id'])) {

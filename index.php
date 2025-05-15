@@ -5,7 +5,7 @@ if (isset($_GET['page'])) {
 } else {
     $page = 1;
 }
-$limit = 2;
+$limit = 5;
 $offset = ($page - 1) * $limit;
 
 ?>
