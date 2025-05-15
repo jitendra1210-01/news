@@ -1,10 +1,21 @@
 <?php include "header.php"; ?>
 <?php
 include "config.php";
-// Redirect to login if not logged in
 if (!isset($_SESSION['user_id'])) {
     header("Location: index.php");
     exit;
+}
+
+if($_SESSION['role'] == 0){
+    $pid = $_GET['id'];
+    $sql1 = "SELECT author from post where post_id={$pid}";
+    $result1 = mysqli_query($connection,$sql1);
+    $row1 = mysqli_fetch_assoc($result1);
+    if($row1['author'] != $_SESSION['user_id']){
+        header("location:post.php");
+    }
+
+
 }
 
 
@@ -37,8 +48,12 @@ if (isset($_GET['id'])) {
             }
         }
     }
-        $update_query = "UPDATE post SET title='$title', description='$details', category=$category, post_img='$image_name' WHERE post_id = $id";
-        $update_result = mysqli_query($connection, $update_query);
+        $update_query = "UPDATE post SET title='$title', description='$details', category=$category, post_img='$image_name' WHERE post_id = $id;";
+        if($_POST["old_category"] != $_POST['category']){
+            $update_query .= "UPDATE category SET post = post - 1 WHERE category_id = {$_POST['old_category']};";
+            $update_query .= "UPDATE category SET post = post + 1 WHERE category_id = {$_POST['category']}";
+        }
+        $update_result = mysqli_multi_query($connection, $update_query);
 
     if ($update_result) {
         header("Location: post.php");
@@ -91,6 +106,7 @@ if (isset($_GET['id'])) {
                         }
                         ?>
                 </select>
+                <input type="hidden" name="old_category" value="<?php echo $row['category'] ?>">
             </div>
             <div class="form-group">
                 <label for="">Post image</label>

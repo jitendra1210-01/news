@@ -71,7 +71,7 @@ if (isset($_GET['category'])) {
                     $total_category  = mysqli_num_rows($count_result);
                     $total_page = ceil($total_category / $limit);
 
-                    echo "<ul class='pagination admin-pagination'>";
+                    
                     if ($total_page > 1) {
                             echo "<ul class='pagination admin-pagination'>";
                             if ($page > 1) {

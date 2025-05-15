@@ -18,20 +18,32 @@ if (isset($_GET['category_id'])) {
     }
 }
 
-if (isset($_GET['post_id'])) {
-    $id = $_GET['post_id'];
-    $select = "SELECT post_img from post where post_id = $id";
-    mysqli_query($connection,$select);
-    if($row = mysqli_fetch_assoc(mysqli_query($connection,$select))){
+if (isset($_GET['post_id']) && isset($_GET['cid'])) {
+    $id = (int) $_GET['post_id']; // cast to int to avoid injection
+    $cid = (int) $_GET['cid'];
+
+    // Get image name
+    $select = "SELECT post_img FROM post WHERE post_id = $id";
+    $result = mysqli_query($connection, $select);
+
+    if ($row = mysqli_fetch_assoc($result)) {
         $image_name = $row['post_img'];
-        if(file_exists("upload/".$image_name)){
-            unlink("upload/".$image_name);
+        if (file_exists("upload/" . $image_name)) {
+            unlink("upload/" . $image_name);
         }
     }
-    $delete_query = "DELETE FROM post where post_id = $id";
-    $delete_result = mysqli_query($connection,$delete_query);
-    if($delete_result){
-        header("location:post.php");
+
+    // Combine DELETE and UPDATE queries
+    $delete_query = "DELETE FROM post WHERE post_id = $id;";
+    $delete_query .= "UPDATE category SET post = post - 1 WHERE category_id = $cid;";
+
+    // Execute both queries
+    if (mysqli_multi_query($connection, $delete_query)) {
+        header("Location: post.php");
+        exit;
+    } else {
+        echo "Error: " . mysqli_error($connection);
     }
 }
+
 ?>

@@ -87,7 +87,7 @@ $select_result = mysqli_query($connection, $select_query);
                 $total_user = mysqli_num_rows($result);
                 $total_page = ceil($total_user / $limit);
                 
-                
+                if($total_page >1){
                 echo "<ul class='pagination admin-pagination'>";
                 if($page > 1){
                 echo "<li><a href='users.php?page=".($page - 1)."'>Prev</a></li>";
@@ -106,7 +106,7 @@ $select_result = mysqli_query($connection, $select_query);
                 echo "<li><a href='users.php?page=".($page + 1)."'>Next</a></li>";
                 }
                 echo "</ul>";
-
+            }
                 ?>
                 <!-- <li class="active"><a>1</a></li>
                     <li><a>3</a></li> -->

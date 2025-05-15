@@ -17,7 +17,7 @@ if (isset($_GET['search'])) {
             <div class="col-md-8">
                 <!-- post-container -->
                 <div class="post-container">
-                        <h2 class="page-heading">Search Term :<?php echo $search ?></h2>
+                        <h2 class="page-heading">Search :<?php echo $search ?></h2>
                         <?php
                         $select_query = "SELECT p.post_id,p.title, IFNULL(c.category_name, 'Uncategorized') AS category_name, p.post_date, u.username,p.description,p.post_img 
                          FROM post p 
@@ -63,7 +63,8 @@ if (isset($_GET['search'])) {
                                 </div>
                         <?php }
                         } else{
-                    echo "<h3>No data Found</h3>"; }?>
+                    echo "<h3>No data Found</h3>"; }
+                    } ?>
 
                     <?php
                     $count_query = "SELECT * from post p left join category c on p.category = c.category_id where c.category_name = '{$search}'";
@@ -85,7 +86,7 @@ if (isset($_GET['search'])) {
                                 echo "<li><a href='category.php?category=" . urlencode($search) . "&page=" . ($page + 1) . "'>Next</a></li>";
                             }
                             echo "</ul>";
-                }} ?>
+                } ?>
                     </div><!-- /post-container -->
             </div>
             <?php include 'sidebar.php'; ?>

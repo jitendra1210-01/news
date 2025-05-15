@@ -37,6 +37,8 @@ VALUES ('$title','$details','$category','$date','$author','$image_name')";
             if ($insert_result) {
                 header("location:post.php");
             }
+        }else{
+            $showError = "Please upload image less than 2 MB.";
         }
     }
 }
@@ -49,6 +51,9 @@ VALUES ('$title','$details','$category','$date','$author','$image_name')";
             </div>
             <div class="col-md-offset-3 col-md-6">
                 <!-- Form -->
+                 <?php if (!empty($showError)): ?>
+                         <div style="color: red; margin: 10px 0px; text-align:center"><?php echo $showError; ?></div>
+<?php endif; ?>
                 <form action="" method="POST" enctype="multipart/form-data">
                     <div class="form-group">
                         <label for="post_title">Title</label>

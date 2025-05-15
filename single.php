@@ -18,11 +18,12 @@ if (isset($_GET['id'])) {
                                 <div class="post-information">
                                     <span>
                                         <i class="fa fa-tags" aria-hidden="true"></i>
-                                        <?php echo htmlspecialchars($row['category_name']); ?>
+                                        <a href='category.php?category=<?php echo htmlspecialchars($row['category_name']);?>'><?php echo htmlspecialchars($row['category_name']); ?></a>
+                                                    
                                     </span>
                                     <span>
                                         <i class="fa fa-user" aria-hidden="true"></i>
-                                        <a href='author.php'><?php echo htmlspecialchars($row['username']); ?></a>
+                                        <a href='author.php?author=<?php echo htmlspecialchars($row['username']);?>'><?php echo htmlspecialchars($row['username']); ?></a>
                                     </span>
                                     <span>
                                         <i class="fa fa-calendar" aria-hidden="true"></i>

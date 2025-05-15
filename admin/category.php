@@ -77,7 +77,7 @@ $offset = ($page - 1) * $limit;
                 $count_result = mysqli_query($connection, $count_query);
                 $total_category  = mysqli_num_rows($count_result);
                 $total_page = ceil($total_category / $limit);
-
+                if($total_page >1){
                 echo "<ul class='pagination admin-pagination'>";
                 if ($page > 1) {
                     echo "<li><a href=category.php?page=" . ($page - 1) . ">Prev</a></li>";
@@ -94,7 +94,8 @@ $offset = ($page - 1) * $limit;
                     echo "<li><a href=category.php?page=" . ($page + 1) . ">Next</a></li>";
                 }
                 echo "</ul>";
-                ?>
+                
+            }?>
 
             </div>
 
